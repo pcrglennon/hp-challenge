@@ -3,7 +3,7 @@ require_relative './spec_helper'
 RSpec.describe Bike do
 
   let(:user) { User.create(name: "Peter") }
-  let(:bike) { Bike.create(type: "Road", color: "Blue", owner: user) }
+  let(:bike) { Bike.create(category: "Road", color: "Blue", owner: user) }
 
   describe '#owner' do
     it 'has an owner' do
@@ -24,7 +24,7 @@ RSpec.describe Bike do
     end
 
     it 'only knows about its own rentals' do
-      other_bike = Bike.create(type: "Mountain", color: "Red", owner: user)
+      other_bike = Bike.create(category: "Mountain", color: "Red", owner: user)
       other_rental = Rental.create(renter: mr_foo, bike: other_bike, start_date: 6.days.from_now, end_date: 8.days.from_now)
 
       expect(bike.rentals).to_not include(other_rental)

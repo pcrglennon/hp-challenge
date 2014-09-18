@@ -6,7 +6,7 @@ RSpec.describe User do
 
   describe '#bikes' do
     it 'can add to #bikes' do
-      bike = Bike.create(color: "Blue", type: "Road")
+      bike = Bike.create(color: "Blue", category: "Road")
       user.bikes << bike
       user.save
       expect(user.bikes).to include(bike)
