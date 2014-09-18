@@ -23,6 +23,16 @@ RSpec.describe Rental do
       expect(current_rental.status).to eq("Current")
     end
 
+    it 'is current if start_date is today' do
+      current_rental = Rental.create(renter: mr_foo, bike: bike, start_date: Date.today, end_date: 2.days.from_now)
+      expect(current_rental.status).to eq("Current")
+    end
+
+    it 'is current if end_date is today' do
+      current_rental = Rental.create(renter: mr_foo, bike: bike, start_date: 2.days.ago, end_date: Date.today)
+      expect(current_rental.status).to eq("Current")
+    end
+
     it 'is upcoming if start_date is upcoming' do
       current_rental = Rental.create(renter: mr_foo, bike: bike, start_date: 2.days.from_now, end_date: 3.days.from_now)
       expect(current_rental.status).to eq("Upcoming")
