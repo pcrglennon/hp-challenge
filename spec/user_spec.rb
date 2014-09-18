@@ -15,13 +15,13 @@ RSpec.describe User do
 
   describe '#rentals_as_owner' do
     it 'is listed as owner on all #rentals_as_owner' do
-      expect(user.rentals_as_owner.all? { |r| r.owner == user }).to be_true
+      expect(user.rentals_as_owner.all? { |r| r.owner == user }).to be true
     end
   end
 
   describe '#rentals_as_renter' do
     it 'is listed as renter on all #rentals_as_renter' do
-      expect(user.rentals_as_renter.all? { |r| r.renter == user }).to be_true
+      expect(user.rentals_as_renter.all? { |r| r.renter == user }).to be true
     end
   end
 
