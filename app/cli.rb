@@ -11,29 +11,34 @@ class Cli
     puts "Welcome, follow the instructions to find upcoming bike rentals"
     puts "Enter 'exit' at any time to exit the program"
     loop do
-      color = get_bike_color
-      break if color == "exit"
       category = get_bike_category
       break if category == "exit"
-      list_upcoming_rentals(normalize_bike_params(color, category))
+      color = get_bike_color
+      break if color == "exit"
+      list_upcoming_rentals(normalize_bike_params(category, color))
     end
     puts "Goodbye!"
   end
 
-  def get_bike_color
-    print "Bike color(enter to skip) "
-    get_input
-  end
-
+  # Category selection is required, don't allow blank value
   def get_bike_category
-    print "Bike category(enter to skip) "
+    category = ""
+    while category.empty?
+      print "Bike category(required) "
+      category = get_input
+    end
+    category
+  end
+
+  def get_bike_color
+    print "Bike color(optional, hit enter to skip) "
     get_input
   end
 
-  # Normalize the hash of bike_params, so if user hits enter to skip a parameter,
+  # Normalize the hash of bike_params, so if user hits enter to skip color choice,
   # that parameter will be ignored by the QueryRunner
-  def normalize_bike_params(color, category)
-    {color: color, category: category}.reject { |k, v| v.nil? || v.empty? }
+  def normalize_bike_params(category, color)
+    {category: category, color: color}.reject { |k, v| v.nil? || v.empty? }
   end
 
   def list_upcoming_rentals(bike_params)
