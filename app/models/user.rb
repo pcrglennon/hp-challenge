@@ -11,11 +11,11 @@ class User < ActiveRecord::Base
       .where(rentals: {renter_id: self.id})
   end
 
-  def self.with_bikes_join(bike_params)
+  def self.with_bikes_joins(bike_params)
     User.joins(:bikes).where(bike: bike_params)
   end
 
-  def self.with_bikes_include(bike_params)
+  def self.with_bikes_includes(bike_params)
     User.includes(:bikes).where(bike: bike_params)
   end
 
