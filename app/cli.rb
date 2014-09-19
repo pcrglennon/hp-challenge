@@ -7,38 +7,33 @@ class Cli
     @query_runner = QueryRunner.new
   end
 
-  attr_reader :query_runner
-
-  def initialize
-    @query_runner = new QueryRunner
-  end
-
   def run
-    puts "Welcome, enter 'exit' at any time to exit the program"
-    puts command_choices
+    puts "Welcome, follow the instructions to find upcoming bike rentals"
+    puts "Enter 'exit' at any time to exit the program"
     loop do
-      command = get_input
-      break if command == "exit"
-      evaluate_command(command)
-      puts command_choices
+      color = get_bike_color
+      break if color == "exit"
+      category = get_bike_category
+      break if category == "exit"
+      list_upcoming_rentals(color: color, category: category)
     end
     puts "Goodbye!"
   end
 
-  def evaluate_command(command)
-    case command.to_i
-    when 1
-      puts "Input a color"
-      color = get_input
-      query_runner.users_with_bikes(color: color)
-    else
-      puts "Invalid command: #{command}"
-    end
+  def get_bike_color
+    print "Bike color(hit enter to skip) "
+    get_input
   end
 
-  def command_choices
-    "Select a command from the list:\n" +
-    "1) Select users with bikes of a color"
+  def get_bike_category
+    print "Bike category(hit enter to skip) "
+    get_input
+  end
+
+  def list_upcoming_rentals(bike_params)
+    # Skip blank parameters
+    bike_params = bike_params.reject { |k, v| v.nil? || v.empty? }
+    query_runner.upcoming_rentals(bike_params, benchmarks: true)
   end
 
   private
