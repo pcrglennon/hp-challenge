@@ -12,11 +12,11 @@ class User < ActiveRecord::Base
   end
 
   def self.with_bikes_joins(bike_params)
-    User.joins(:bikes).where(bike: bike_params)
+    User.joins(:bikes).where(bikes: bike_params)
   end
 
   def self.with_bikes_includes(bike_params)
-    User.includes(:bikes).where(bike: bike_params)
+    User.includes(:bikes).where(bikes: bike_params)
   end
 
   def self.with_bikes_naive(bike_params)
