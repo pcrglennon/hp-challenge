@@ -1,4 +1,12 @@
+require_relative './query_runner'
+
 class Cli
+
+  attr_reader :query_runner
+
+  def initialize
+    @query_runner = new QueryRunner
+  end
 
   def run
     puts "Welcome, choose a command from the list below and follow the instructions"
