@@ -15,24 +15,28 @@ class Cli
       break if color == "exit"
       category = get_bike_category
       break if category == "exit"
-      list_upcoming_rentals(color: color, category: category)
+      list_upcoming_rentals(normalize_bike_params(color, category))
     end
     puts "Goodbye!"
   end
 
   def get_bike_color
-    print "Bike color(hit enter to skip) "
+    print "Bike color(enter to skip) "
     get_input
   end
 
   def get_bike_category
-    print "Bike category(hit enter to skip) "
+    print "Bike category(enter to skip) "
     get_input
   end
 
+  # Normalize the hash of bike_params, so if user hits enter to skip a parameter,
+  # that parameter will be ignored by the QueryRunner
+  def normalize_bike_params(color, category)
+    {color: color, category: category}.reject { |k, v| v.nil? || v.empty? }
+  end
+
   def list_upcoming_rentals(bike_params)
-    # Skip blank parameters
-    bike_params = bike_params.reject { |k, v| v.nil? || v.empty? }
     query_runner.upcoming_rentals(bike_params, benchmarks: true)
   end
 
