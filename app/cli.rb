@@ -1,6 +1,11 @@
 require_relative './query_runner'
 
 class Cli
+  attr_reader :query_runner
+
+  def initialize
+    @query_runner = QueryRunner.new
+  end
 
   attr_reader :query_runner
 
@@ -9,7 +14,7 @@ class Cli
   end
 
   def run
-    puts "Welcome, choose a command from the list below and follow the instructions"
+    puts "Welcome, enter 'exit' at any time to exit the program"
     puts command_choices
     loop do
       command = get_input
@@ -25,14 +30,15 @@ class Cli
     when 1
       puts "Input a color"
       color = get_input
-      puts "Selecting bikes by color: #{color}"
+      query_runner.users_with_bikes(color: color)
     else
       puts "Invalid command: #{command}"
     end
   end
 
   def command_choices
-    "1) Select bikes by color"
+    "Select a command from the list:\n" +
+    "1) Select users with bikes of a color"
   end
 
   private
