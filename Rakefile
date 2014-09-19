@@ -26,7 +26,12 @@ namespace :db do
     File.delete(db_file) if File.exist?(db_file)
   end
 
+  desc "seed the DB with code in db/seeds.rb"
+  task :seed => [:migrate] do
+    load('./db/seeds.rb') if File.exist?('./db/seeds.rb')
+  end
+
   desc "drop the DB and re-migrate"
-  task :reset => [:drop, :migrate]
+  task :reset => [:drop, :migrate, :seed]
 
 end
