@@ -9,36 +9,18 @@ class Cli
 
   def run
     puts "Welcome, follow the instructions to find upcoming bike rentals"
-    puts "Enter 'exit' at any time to exit the program"
+    puts "Enter 'exit' at any time to exit the program\n\n"
     loop do
-      category = get_bike_category
-      break if category == "exit"
-      color = get_bike_color
-      break if color == "exit"
-      list_upcoming_rentals(normalize_bike_params(category, color))
+      puts "Search by category and color(optional)"
+      bike_params = gather_bike_params
+      list_upcoming_rentals(bike_params)
     end
-    puts "Goodbye!"
   end
 
-  # Category selection is required, don't allow blank value
-  def get_bike_category
-    category = ""
-    while category.empty?
-      print "Bike category(required) "
-      category = get_input
-    end
-    category
-  end
-
-  def get_bike_color
-    print "Bike color(optional, hit enter to skip) "
-    get_input
-  end
-
-  # Normalize the hash of bike_params, so if user hits enter to skip color choice,
-  # that parameter will be ignored by the QueryRunner
-  def normalize_bike_params(category, color)
-    {category: category, color: color}.reject { |k, v| v.nil? || v.empty? }
+  def gather_bike_params
+    category = get_bike_category
+    color = get_bike_color
+    normalize_bike_params(category, color)
   end
 
   def list_upcoming_rentals(bike_params)
@@ -47,6 +29,27 @@ class Cli
 
   private
 
+    # Category selection is required, don't allow blank value
+    def get_bike_category
+      category = ""
+      while category.empty?
+        print "Bike category(required)"
+        category = get_input
+      end
+      category
+    end
+
+    def get_bike_color
+      print "Bike color(optional, hit enter to skip)"
+      get_input
+    end
+
+    # Normalize the hash of bike_params, so if user hits enter to skip color choice,
+    # that parameter will be ignored by the QueryRunner
+    def normalize_bike_params(category, color)
+      {category: category, color: color}.reject { |k, v| v.nil? || v.empty? }
+    end
+
     # Specify STDOUT as the explicit receiver for puts
     # STDOUT/STDIN must be specified when doing IO within a rake task
     def puts(output)
@@ -54,13 +57,24 @@ class Cli
     end
 
     # Print prompt, then get and return input
+    # Quit program if input == "exit"
     def get_input
       print prompt
-      STDIN.gets.chomp
+      user_input = STDIN.gets.chomp
+      if user_input == "exit"
+        exit
+      else
+        user_input
+      end
     end
 
     def prompt
       " > "
+    end
+
+    def exit
+      puts "Goodbye!"
+      Kernel.exit(false) # Don't throw Exception
     end
 
 end
