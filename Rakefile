@@ -1,4 +1,11 @@
-require_relative 'config/environment.rb'
+require_relative 'config/environment'
+require_relative 'app/cli'
+
+desc "run the Command Line Interface"
+task :run do
+  cli = Cli.new
+  cli.run
+end
 
 namespace :db do
 
