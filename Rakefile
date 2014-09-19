@@ -1,10 +1,16 @@
-require_relative 'config/environment'
-require_relative 'app/cli'
+require_relative './config/environment'
 
 desc "run the Command Line Interface"
 task :run do
+  require_relative './app/cli'
   cli = Cli.new
   cli.run
+end
+
+desc "start a pry session"
+task :console do
+  require 'pry'
+  Pry.start
 end
 
 namespace :db do
