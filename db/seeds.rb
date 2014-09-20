@@ -1,7 +1,7 @@
 require 'faker'
 
 def seed_users
-  40.times.map do |i|
+  60.times.map do |i|
     User.create(name: Faker::Name.name)
   end
 end
@@ -10,10 +10,11 @@ users = seed_users
 puts "User seed data completed"
 
 def seed_bikes(users)
-  categories = %w(Road Mountain Hybrid BMX Recumbent Stationary Penny-farthing)
+  colors = %w(red orange yellow green blue indigo violet)
+  categories = %w(road mountain hybrid bmx recumbent stationary penny-farthing)
 
-  60.times.map do |i|
-    Bike.create(owner: users.sample, color: Faker::Commerce.color, category: categories.sample)
+  200.times.map do |i|
+    Bike.create(owner: users.sample, color: colors.sample, category: categories.sample)
   end
 end
 
@@ -32,7 +33,7 @@ def rental_dates
 end
 
 def seed_rentals(users, bikes)
-  120.times.map do |i|
+  1000.times.map do |i|
     dates = rental_dates
     Rental.create(renter: users.sample, bike: bikes.sample, start_date: dates[:start_date], end_date: dates[:end_date])
   end
