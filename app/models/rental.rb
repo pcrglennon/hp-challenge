@@ -30,8 +30,13 @@ class Rental < ActiveRecord::Base
     rentals.map { |rental| rental.to_info_hash }
   end
 
-  def self.upcoming_naive(bike_params)
-    rentals = where("start_date > ?", Date.today)
+  def self.upcoming_enumeration(bike_params)
+    rentals = Rental.all
+    rentals = rentals.select do |rental|
+      rental.status == "upcoming" &&
+      rental.bike.category == bike_params[:category] &&
+      (bike_params[:color].nil? || rental.bike.color == bike_params[:color])
+    end
     rentals.map { |rental| rental.to_info_hash }
   end
 

@@ -50,10 +50,9 @@ RSpec.describe Rental do
     it 'should each return same information' do
       rentals_joins = Rental.upcoming_joins(category: "road")
       rentals_includes = Rental.upcoming_includes(category: "road")
-      rentals_naive = Rental.upcoming_naive(category: "road")
-      expect(rentals_joins).to eq(rentals_includes).and eq(rentals_naive)
+      rentals_enumeration = Rental.upcoming_enumeration(category: "road")
+      expect(rentals_joins).to eq(rentals_includes)
+                           .and eq(rentals_enumeration)
     end
-
   end
-
 end
