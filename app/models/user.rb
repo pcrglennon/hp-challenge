@@ -11,20 +11,4 @@ class User < ActiveRecord::Base
       .where(rentals: {renter_id: self.id})
   end
 
-  def self.with_bikes_joins(bike_params)
-    User.joins(:bikes).where(bikes: bike_params)
-  end
-
-  def self.with_bikes_includes(bike_params)
-    User.includes(:bikes).where(bikes: bike_params)
-  end
-
-  def self.with_bikes_naive(bike_params)
-    # Get all bikes which match bike_params
-    matching_bikes = Bike.all.select do |bike|
-      bike_params.all? { |k, v| bike.send(k.to_sym) == v }
-    end
-    matching_bikes.collect { |bike| bike.owner }.compact.uniq
-  end
-
 end
