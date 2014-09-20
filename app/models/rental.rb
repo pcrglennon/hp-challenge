@@ -17,15 +17,34 @@ class Rental < ActiveRecord::Base
     bike.owner
   end
 
-  def upcoming_joins
+  # These three methods each return an array of hashes of information in this format:
+  # {start_date: date, end_date: date, bike: {color: color, category: category}, owner_name: name}
 
+  def self.upcoming_joins(bike_params)
+    rentals = joins(bike: :owner).where(bikes: bike_params).where("start_date > ?", Date.today)
+    rentals.map { |rental| rental.to_info_hash }
   end
 
-  def upcoming_includes
-
+  def self.upcoming_includes(bike_params)
+    rentals = includes(bike: :owner).where(bikes: bike_params).where("start_date > ?", Date.today)
+    rentals.map { |rental| rental.to_info_hash }
   end
 
-  def upcoming_naive
+  def self.upcoming_naive(bike_params)
+    rentals = where("start_date > ?", Date.today)
+    rentals.map { |rental| rental.to_info_hash }
+  end
 
+
+  def to_info_hash
+    {
+      start_date: self.start_date,
+      end_date: self.end_date,
+      bike: {
+        color: self.bike.color,
+        category: self.bike.category
+      },
+      owner_name: self.owner.name
+    }
   end
 end
