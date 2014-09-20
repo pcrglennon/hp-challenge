@@ -16,4 +16,16 @@ class Rental < ActiveRecord::Base
   def owner
     bike.owner
   end
+
+  def upcoming_joins
+
+  end
+
+  def upcoming_includes
+
+  end
+
+  def upcoming_naive
+
+  end
 end
