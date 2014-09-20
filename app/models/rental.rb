@@ -17,8 +17,8 @@ class Rental < ActiveRecord::Base
     bike.owner
   end
 
-  # These three methods each return an array of hashes of information in this format:
-  # {start_date: date, end_date: date, bike: {color: color, category: category}, owner_name: name}
+  # These three methods each return an array of hashes of information on a rental
+  # See #to_info_hash for format of the hash
 
   def self.upcoming_joins(bike_params)
     rentals = joins(bike: :owner).where(bikes: bike_params).where("start_date > ?", Date.today)

@@ -8,7 +8,7 @@ class QueryRunner
   def upcoming_rentals(bike_params, options)
     # List the rentals using the most efficient method
     rentals = Rental.upcoming_includes(bike_params)
-    "\nRentals:\n #{rentals}"
+    puts "\nNumber of matching rentals: #{rentals.count}"
 
     if options[:benchmarks]
       benchmark_upcoming_rentals(bike_params)
