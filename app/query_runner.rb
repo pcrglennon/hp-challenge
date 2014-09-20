@@ -3,10 +3,8 @@ require 'benchmark'
 
 class QueryRunner
 
-  # Select Bike, User, and Rental
-
   def upcoming_rentals(bike_params, options)
-    # List the rentals using the most efficient method
+    # List the rentals using the most efficient method (includes)
     rentals = Rental.upcoming_includes(bike_params)
     puts "\nNumber of matching rentals: #{rentals.count}"
 
@@ -17,6 +15,7 @@ class QueryRunner
 
   private
 
+    # Benchmark each Rental::upcoming_* method
     def benchmark_upcoming_rentals(bike_params)
       puts "\nBenchmarks:"
       Benchmark.bm(10) do |x|

@@ -8,7 +8,7 @@ class Cli
   end
 
   def run
-    puts "Welcome, follow the instructions to find upcoming bike rentals"
+    puts "\nWelcome, follow the instructions to find upcoming bike rentals"
     puts "Enter 'exit' at any time to exit the program\n\n"
     loop do
       puts "Search by category and color(optional)"
