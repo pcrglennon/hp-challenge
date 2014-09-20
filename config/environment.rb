@@ -9,4 +9,4 @@ Dir[File.join(File.dirname(__FILE__), "../app/models", "*.rb")].each {|f| requir
 
 # Setup DB connection
 CONNECTION_DETAILS = YAML::load(File.open('config/database.yml'))
-ActiveRecord::Base.establish_connection(CONNECTION_DETAILS)
+ActiveRecord::Base.establish_connection(CONNECTION_DETAILS["development"])

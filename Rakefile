@@ -22,7 +22,7 @@ namespace :db do
 
   desc "drop the DB"
   task :drop do
-    db_file = CONNECTION_DETAILS.fetch("database")
+    db_file = CONNECTION_DETAILS["development"].fetch("database")
     File.delete(db_file) if File.exist?(db_file)
   end
 
