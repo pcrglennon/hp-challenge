@@ -21,7 +21,12 @@ bikes = seed_bikes(users)
 puts "Bike seed data completed"
 
 def rental_dates
-  start_date = Faker::Number.number(1).to_i.weeks.ago
+  # Flip a coin to create start_date in past or future
+  if [1, 2].sample == 1
+    start_date = Faker::Number.number(1).to_i.weeks.ago
+  else
+    start_date = Faker::Number.number(1).to_i.weeks.from_now
+  end
   end_date = start_date + Faker::Number.number(2).to_i.days
   {start_date: start_date, end_date: end_date}
 end
