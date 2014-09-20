@@ -19,8 +19,11 @@ class QueryRunner
     def benchmark_upcoming_rentals(bike_params)
       puts "\nBenchmarks:"
       Benchmark.bm(13) do |x|
+        ActiveRecord::Base.connection.query_cache.clear
         x.report("joins: ") { Rental.upcoming_joins(bike_params) }
+        ActiveRecord::Base.connection.query_cache.clear
         x.report("includes: ") { Rental.upcoming_includes(bike_params) }
+        ActiveRecord::Base.connection.query_cache.clear
         x.report("enumeration: ") { Rental.upcoming_enumeration(bike_params) }
       end
     end

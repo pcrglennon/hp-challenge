@@ -31,11 +31,14 @@ class Rental < ActiveRecord::Base
   end
 
   def self.upcoming_enumeration(bike_params)
-    rentals = Rental.all
-    rentals = rentals.select do |rental|
-      rental.status == "upcoming" &&
-      rental.bike.category == bike_params[:category] &&
-      (bike_params[:color].nil? || rental.bike.color == bike_params[:color])
+    rentals = []
+    Rental.all.each do |rental|
+      # Select all upcoming bikes w/ matching category & color (if color specified)
+      if rental.bike.category == bike_params[:category] &&
+         rental.status == "upcoming" &&
+         (bike_params[:color].nil? || rental.bike.color == bike_params[:color])
+        rentals << rental
+      end
     end
     rentals.map { |rental| rental.to_info_hash }
   end
